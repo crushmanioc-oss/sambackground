@@ -1,0 +1,661 @@
+<title>Samba Luma Per</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600&display=swap">
+<style>
+/* Concept : plage de Rio à l'heure dorée. Verre dépoli, filets fins, sérif élégant, vert et or du drapeau en accents discrets. */
+:root{
+  --green:#0f7a3d; --green-deep:#0a4a2a; --gold:#e8b830; --gold-soft:#f6dc7a;
+  --ink:#10231a; --muted:#3f5b4c; --white:#fffdf7; --sky:#8cc9e6;
+  --glass:rgba(255,253,247,.78); --line:rgba(16,35,26,.14);
+  --font-display:'Cormorant Garamond','Playfair Display',Georgia,'Times New Roman',serif;
+  --font-body:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Cpath d='M4 2 L4 28 L10.5 22.2 L15 32.5 L19.6 30.4 L15.2 20.6 L24 20 Z'/%3E%3C/clipPath%3E%3C/defs%3E%3Cpath d='M4 2 L4 28 L10.5 22.2 L15 32.5 L19.6 30.4 L15.2 20.6 L24 20 Z' fill='white' stroke='white' stroke-width='4' stroke-linejoin='round'/%3E%3Cg clip-path='url(%23c)'%3E%3Crect width='36' height='36' fill='%23009c3b'/%3E%3Cpath d='M11.5 7 L20 15 L11.5 23 L3 15 Z' fill='%23ffdf00'/%3E%3Ccircle cx='11.5' cy='15' r='4' fill='%23002776'/%3E%3C/g%3E%3Cpath d='M4 2 L4 28 L10.5 22.2 L15 32.5 L19.6 30.4 L15.2 20.6 L24 20 Z' fill='none' stroke='%230b2e1f' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2,auto}
+html{scroll-behavior:smooth}
+body{background:var(--sky);color:var(--ink);font:400 16px/1.7 var(--font-body);overflow-x:clip;padding-bottom:140px}
+h1,h2,h3,p,ul,dl,dd,figure,blockquote{margin:0}
+ul{padding:0;list-style:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.bg .palm{position:absolute;bottom:0;height:88vh;aspect-ratio:520/900;transform-origin:50% 100%;animation:sway 9s ease-in-out infinite alternate}
+.bg .palm svg{width:100%;height:100%;display:block}
+.bg .palm.l{left:-2vw}
+.bg .palm.r{right:-2vw;transform:scaleX(-1);animation-name:sway2}
+@keyframes sway{from{rotate:-.6deg}to{rotate:.7deg}}
+@keyframes sway2{from{rotate:.6deg}to{rotate:-.7deg}}
+.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(10,40,30,.22));}
+#app{position:relative;z-index:1;overflow-x:clip}
+.wrap{width:min(1080px,100%);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));position:relative}
+@media (max-width:1180px){.wrap{padding-right:calc(max(16px,env(safe-area-inset-right,0px)) + 26px)}}
+
+/* icônes */
+.ic{width:1em;height:1em;display:block;flex:none}
+i[data-ic]{display:inline-flex;font-style:normal}
+.f{fill:currentColor}.a{fill:var(--ac,#e8b830)}.k{fill:#10231a}.w{fill:#fff}.g{fill:#6fbf5a}
+.s{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.as{fill:none;stroke:var(--ac,#e8b830);stroke-linecap:round;stroke-linejoin:round}
+.t{fill:none;stroke:#8a5a3c;stroke-linecap:round}
+
+/* hero */
+.hero{padding:clamp(28px,7vh,80px) 0 6px}
+.hero-card{width:min(760px,100%);background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);border:1px solid rgba(255,255,255,.7);border-radius:22px;padding:clamp(22px,4vw,40px);box-shadow:0 24px 70px rgba(10,40,30,.22)}
+.kicker{font:600 .72rem/1 var(--font-body);letter-spacing:.28em;text-transform:uppercase;color:var(--green)}
+h1{font:600 clamp(2.6rem,7vw,4.8rem)/.98 var(--font-display);color:var(--green-deep);margin:.6rem 0 .5rem;letter-spacing:-.01em}
+.tagline{font:italic 500 clamp(1.2rem,2.6vw,1.6rem)/1.3 var(--font-display);color:var(--muted)}
+.rule{height:2px;width:72px;margin:20px 0 16px;background:linear-gradient(90deg,var(--green) 0 33%,var(--gold) 33% 66%,#fff 66%);border-radius:2px;box-shadow:0 0 0 1px rgba(16,35,26,.08)}
+.facts{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.88rem;font-weight:500;color:var(--ink)}
+.facts li{display:flex;align-items:center;gap:.5rem}
+.facts li+li::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--gold);margin-right:.3rem}
+.facts .ic{width:1.3rem;height:1.3rem}
+
+/* niveaux */
+.level{position:relative;padding-block:26px}
+.panel{position:relative;background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(1.25);backdrop-filter:blur(18px) saturate(1.25);border:1px solid rgba(255,255,255,.7);border-radius:24px;box-shadow:0 24px 70px rgba(10,40,30,.2);padding:clamp(22px,3.6vw,48px)}
+.plaque{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin-bottom:28px}
+.lvl{flex-basis:100%;display:flex;align-items:center;gap:12px;font:600 .72rem/1 var(--font-body);letter-spacing:.26em;text-transform:uppercase;color:var(--green)}
+.lvl::after{content:"";width:44px;height:1px;background:var(--gold)}
+h2{font:600 clamp(2rem,4.6vw,3rem)/1.05 var(--font-display);color:var(--green-deep);text-wrap:balance}
+h3{font:600 1.5rem/1.2 var(--font-display);color:var(--green-deep);display:flex;align-items:center;gap:.6rem;margin:6px 0 16px}
+h3 .ic{width:1.3rem;height:1.3rem;color:var(--green);--ac:var(--gold)}
+.lead{flex-basis:100%;max-width:62ch;color:var(--muted);font-size:.98rem}
+
+/* cartes */
+.deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:14px;margin-bottom:30px}
+.card{position:relative;aspect-ratio:3/4.1;padding:0;border:0;background:none;perspective:1000px;text-align:center;transition:transform .35s}
+.card:hover{transform:translateY(-4px)}
+.card-in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.card.flipped .card-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;padding:.8rem;border-radius:14px;box-shadow:0 14px 30px rgba(10,40,30,.22),inset 0 1px 0 rgba(255,255,255,.25);-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden}
+.face::before{content:"";position:absolute;inset:7px;border:1px solid rgba(255,255,255,.35);border-radius:9px;pointer-events:none}
+.face.back{transform:rotateY(180deg)}
+.q .front{background:radial-gradient(120% 90% at 30% 0%,#1a9a52,#0a4a2a 70%);color:var(--gold-soft);--ac:rgba(255,255,255,.75)}
+.d .front{background:radial-gradient(120% 90% at 30% 0%,#f0b650,#a8601f 75%);color:#fff7dc;--ac:rgba(255,255,255,.7)}
+.back{background:linear-gradient(170deg,#fffdf7,#f6efd9);color:var(--ink)}
+.back::before{border-color:rgba(16,35,26,.16)}
+.big{width:3rem;height:3rem}
+.front b{font:600 1rem/1.1 var(--font-display);letter-spacing:.14em;text-transform:uppercase}
+.front small{font:500 .66rem/1 var(--font-body);letter-spacing:.18em;text-transform:uppercase;opacity:.8}
+.corner{position:absolute;top:14px;font:600 .58rem/1 var(--font-body);letter-spacing:.24em;text-transform:uppercase;opacity:.8}
+.back b{font:600 1.15rem/1.1 var(--font-display);color:var(--green-deep);letter-spacing:.06em}
+.back>span{font-size:.86rem;line-height:1.5;color:var(--muted);padding-inline:.2rem}
+.mini{width:1rem;height:1rem;color:var(--gold);--ac:var(--gold)}
+.btn{display:inline-flex;align-items:center;gap:.6rem;font:600 .74rem/1 var(--font-body);letter-spacing:.18em;text-transform:uppercase;background:transparent;border:1px solid var(--green);color:var(--green-deep);border-radius:999px;padding:.85rem 1.3rem;transition:background .25s,color .25s}
+.btn:hover{background:var(--green);color:#fff}
+
+/* fiche */
+.fiche{display:grid;grid-template-columns:minmax(0,250px) minmax(0,1fr);gap:clamp(22px,4vw,56px);align-items:start}
+.id-card{text-align:center}
+.avatar{width:min(230px,100%);aspect-ratio:1;margin:0 auto;border-radius:50%;filter:drop-shadow(0 16px 26px rgba(10,40,30,.3))}
+.avatar svg{width:100%;height:100%;display:block}
+.id-name{font:600 1.5rem/1.1 var(--font-display);margin-top:18px;color:var(--green-deep)}
+.id-sub{font:italic 500 1.05rem/1.3 var(--font-display);color:var(--muted)}
+.cv{display:grid;border-top:1px solid var(--line)}
+.cv>div{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;padding:.85rem 0;align-items:center;border-bottom:1px solid var(--line)}
+.cv dt{font:600 .7rem/1.3 var(--font-body);letter-spacing:.2em;text-transform:uppercase;color:var(--green)}
+.cv dd{font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:.45rem;border:1px solid rgba(15,122,61,.32);border-radius:999px;padding:.25rem .85rem .25rem .55rem;background:rgba(255,255,255,.65);font-weight:500;font-size:.86rem}
+.chip .ic{width:1.15rem;height:1.15rem;color:var(--green);--ac:var(--gold)}
+.chip.t2 .ic{color:#b9801a;--ac:var(--green)}
+
+/* parcours */
+.tl{position:relative;display:grid;gap:40px}
+.tl::before{content:"";position:absolute;left:27px;top:26px;bottom:26px;width:1px;background:linear-gradient(var(--gold),var(--green) 50%,var(--gold))}
+.step{display:grid;grid-template-columns:56px minmax(0,1fr);gap:26px;align-items:start}
+.mark{position:relative;display:flex;flex-direction:column;align-items:center}
+.disc{width:56px;height:56px;border-radius:50%;background:var(--white);border:1px solid var(--gold);display:grid;place-items:center;color:var(--green);box-shadow:0 8px 20px rgba(10,40,30,.18),0 0 0 6px rgba(255,253,247,.75);--ac:var(--gold)}
+.disc .ic{width:28px;height:28px}
+.when{position:absolute;left:78px;top:-2px;white-space:nowrap;font:600 .68rem/1 var(--font-body);letter-spacing:.24em;text-transform:uppercase;color:var(--green)}
+.entry{padding-top:18px}
+.entry h3{font-size:1.8rem;margin:0 0 10px;display:block}
+.entry p{max-width:68ch;color:#22382d}
+.entry p+p{margin-top:.8em}
+.callout{margin-top:16px;padding:4px 0 4px 18px;border-left:2px solid var(--gold);font:italic 500 1.3rem/1.45 var(--font-display)!important;color:var(--green-deep)!important}
+.checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0 28px;margin:16px 0}
+.checks li{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.93rem;line-height:1.45}
+.checks .ic{width:1.1rem;height:1.1rem;color:var(--green);margin-top:3px}
+
+/* habitudes */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.tile{display:flex;gap:16px;align-items:center;background:rgba(255,255,255,.62);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-weight:500;font-size:.94rem;line-height:1.45;transition:transform .3s,box-shadow .3s,background .3s}
+.tile:hover{transform:translateY(-3px);background:rgba(255,255,255,.9);box-shadow:0 14px 30px rgba(10,40,30,.12)}
+.tile .ic{width:2.1rem;height:2.1rem;color:var(--green);--ac:var(--gold)}
+
+/* phrases */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:26px 40px}
+.quote{padding:2px 0 2px 20px;border-left:2px solid var(--gold)}
+.quote .pt{font:italic 600 1.45rem/1.25 var(--font-display);color:var(--green-deep);text-wrap:balance}
+.quote .fr{margin-top:.5rem;font-size:.9rem;color:var(--muted)}
+.final{margin-top:40px;background:linear-gradient(140deg,#0c4a2b,#08281a);color:#f4efdc;border-radius:20px;padding:clamp(24px,4vw,48px);box-shadow:0 20px 50px rgba(8,40,26,.4);position:relative;overflow:hidden}
+.final::before{content:"“";position:absolute;top:-30px;left:18px;font:600 9rem/1 var(--font-display);color:rgba(232,184,48,.22)}
+.final blockquote{position:relative;font:italic 500 clamp(1.2rem,2.4vw,1.55rem)/1.55 var(--font-display);max-width:66ch}
+.final cite{display:block;margin-top:18px;font:600 .74rem/1 var(--font-body);letter-spacing:.26em;text-transform:uppercase;color:var(--gold-soft);font-style:normal}
+.legal{text-align:center;font:600 .7rem/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;padding:44px 16px 0;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+
+/* pièces à retourner */
+.coin{position:absolute;z-index:4;width:58px;height:58px;padding:0;border:0;background:none;perspective:500px;animation:bob 6s ease-in-out infinite;animation-delay:var(--d,0s)}
+.coin-in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s}
+.coin.flipped .coin-in{transform:rotateY(180deg)}
+.cf{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;-webkit-backface-visibility:hidden;backface-visibility:hidden;box-shadow:0 10px 24px rgba(10,40,30,.28)}
+.cf.front{background:var(--white);border:1px solid var(--gold);color:var(--green);--ac:var(--gold)}
+.cf.front .ic{width:30px;height:30px}
+.cf.back{background:linear-gradient(150deg,#138a47,#0a4a2a);color:var(--gold-soft);transform:rotateY(180deg);font:600 .78rem/1 var(--font-display);letter-spacing:.04em;text-align:center}
+.tip{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(10,40,30,.92);color:#fff;font-size:.72rem;font-weight:500;padding:3px 10px;border-radius:999px;opacity:0;transition:opacity .25s;pointer-events:none}
+.coin.flipped .tip{opacity:1}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+
+/* navigation latérale */
+.levels{position:fixed;z-index:60;right:max(10px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;padding:8px 6px;border-radius:999px;background:rgba(255,253,247,.6);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.7);box-shadow:0 10px 30px rgba(10,40,30,.18)}
+.levels a{position:relative;display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--ink)}
+.levels .dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:600 .78rem/1 var(--font-body);transition:background .25s,color .25s,transform .25s}
+.levels .dot .ic{width:17px;height:17px;color:var(--gold);--ac:var(--gold)}
+.levels .lab{position:absolute;right:42px;white-space:nowrap;background:rgba(10,40,30,.92);color:#fff;font:600 .68rem/1 var(--font-body);letter-spacing:.16em;text-transform:uppercase;padding:.5rem .7rem;border-radius:999px;opacity:0;transform:translateX(6px);transition:opacity .2s,transform .2s;pointer-events:none}
+.levels a:hover .lab,.levels a:focus-visible .lab{opacity:1;transform:none}
+.levels a:hover .dot{background:rgba(15,122,61,.14)}
+.levels a.on .dot{background:var(--green);color:#fff}
+.levels a.on .dot .ic{color:var(--gold-soft)}
+@media (max-width:760px){
+  .levels{right:5px;padding:6px 4px;gap:4px}.levels .dot{width:24px;height:24px;font-size:.68rem}.levels .dot .ic{width:14px;height:14px}
+  .levels .lab{display:none}
+}
+
+/* lecteur */
+.player{position:fixed;z-index:70;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(760px,calc(100% - 32px));display:grid;grid-template-columns:auto minmax(0,1.1fr) auto minmax(0,1.6fr) auto auto;align-items:center;gap:14px;background:rgba(255,253,247,.82);-webkit-backdrop-filter:blur(20px) saturate(1.3);backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.8);border-radius:20px;padding:10px 16px;box-shadow:0 18px 50px rgba(10,40,30,.28)}
+.player .vinyl{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0 14%,#0a2a1b 15% 40%,#143d28 41% 43%,#0a2a1b 44% 62%,#143d28 63% 65%,#0a2a1b 66%);box-shadow:0 4px 12px rgba(10,40,30,.35)}
+.player.playing .vinyl{animation:spin2 4s linear infinite}
+@keyframes spin2{to{transform:rotate(360deg)}}
+.meta{min-width:0;line-height:1.25}
+.meta strong{display:block;font:600 1.05rem/1.15 var(--font-display);color:var(--green-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta span{display:block;font-size:.72rem;font-weight:500;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbtn,.mbtn{display:grid;place-items:center;border:0;border-radius:50%;background:var(--green);color:#fff;width:44px;height:44px;padding:0;position:relative;box-shadow:0 6px 16px rgba(15,122,61,.4);transition:transform .2s}
+.pbtn:hover{transform:scale(1.06)}
+.pbtn svg{width:20px;height:20px;fill:currentColor}
+.pbtn .i-pause{display:none}.player.playing .i-play{display:none}.player.playing .i-pause{display:block}
+.player:not(.playing):not(.touched) .pbtn::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--green);animation:ping 1.8s ease-out infinite}
+@keyframes ping{from{transform:scale(.85);opacity:1}to{transform:scale(1.3);opacity:0}}
+.seekbox{display:flex;align-items:center;gap:10px;min-width:0;font:500 .72rem/1 var(--font-body);font-variant-numeric:tabular-nums;color:var(--muted)}
+.volbox{display:flex;align-items:center;gap:8px;width:128px}
+.mbtn{width:32px;height:32px;background:transparent;color:var(--green-deep);box-shadow:none}
+.mbtn:hover{background:rgba(15,122,61,.12)}
+.mbtn svg{width:19px;height:19px;fill:currentColor}
+.mbtn .x{display:none}.mbtn.off .x{display:block}.mbtn.off .w2{display:none}
+.eq{display:flex;gap:3px;align-items:flex-end;height:22px}
+.eq i{width:3px;height:5px;background:var(--green);border-radius:2px}
+.player.playing .eq i{animation:eq .8s ease-in-out infinite alternate}
+.eq i:nth-child(2){animation-delay:.15s!important}.eq i:nth-child(3){animation-delay:.3s!important}.eq i:nth-child(4){animation-delay:.08s!important}
+@keyframes eq{to{height:20px}}
+input[type=range]{-webkit-appearance:none;appearance:none;height:18px;background:transparent;width:100%;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:99px;background:linear-gradient(90deg,var(--green) var(--p,0%),rgba(16,35,26,.18) var(--p,0%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-5px;border-radius:50%;background:#fff;border:2px solid var(--green);box-shadow:0 2px 6px rgba(0,0,0,.25)}
+input[type=range]::-moz-range-track{height:4px;border-radius:99px;background:rgba(16,35,26,.18)}
+input[type=range]::-moz-range-progress{background:var(--green);height:4px;border-radius:99px}
+input[type=range]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid var(--green)}
+@media (max-width:700px){
+  .player{grid-template-columns:auto minmax(0,1fr) auto auto;grid-template-areas:"v m p e" "s s s s" "o o o o";gap:8px 12px;padding:10px 14px}
+  .vinyl{grid-area:v;width:36px;height:36px}.meta{grid-area:m}.pbtn{grid-area:p}.eq{grid-area:e}
+  .seekbox{grid-area:s}.volbox{grid-area:o;width:100%}
+  body{padding-bottom:190px}
+}
+
+/* mobile */
+@media (max-width:760px){
+  .fiche{grid-template-columns:1fr}
+  .cv>div{grid-template-columns:1fr;gap:4px}
+  .step{grid-template-columns:44px minmax(0,1fr);gap:16px}
+  .tl::before{left:21px}
+  .disc{width:44px;height:44px;box-shadow:0 6px 14px rgba(10,40,30,.18),0 0 0 4px rgba(255,253,247,.75)}.disc .ic{width:22px;height:22px}
+  .when{left:60px}
+  .entry h3{font-size:1.5rem}
+  .coin{width:48px;height:48px}.cf.front .ic{width:25px;height:25px}.cf.back{font-size:.66rem}
+  .coin.hide-sm{display:none}
+  .quotes{grid-template-columns:1fr}
+  .bg .palm{height:62vh}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<!-- icônes du Brésil -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<symbol id="i-sun" viewBox="0 0 64 64"><circle class="f" cx="32" cy="32" r="12"/><path class="s" stroke-width="4.5" d="M32 5v9M32 50v9M5 32h9M50 32h9M12.9 12.9l6.4 6.4M44.7 44.7l6.4 6.4M12.9 51.1l6.4-6.4M44.7 19.3l6.4-6.4"/></symbol>
+<symbol id="i-smile" viewBox="0 0 64 64"><circle class="f" cx="32" cy="32" r="25"/><circle class="a" cx="24" cy="27" r="3.5"/><circle class="a" cx="40" cy="27" r="3.5"/><path class="as" stroke-width="4" d="M19 37Q32 52 45 37"/></symbol>
+<symbol id="i-palm" viewBox="0 0 64 64"><path class="t" stroke-width="5" d="M31 61Q29 40 34 23"/><path class="f" d="M34 23Q18 21 5 35Q22 27 34 23Z"/><path class="f" d="M34 23Q20 8 3 18Q20 16 34 23Z"/><path class="f" d="M34 23Q28 6 41 2Q38 14 34 23Z"/><path class="f" d="M34 23Q48 8 62 18Q48 16 34 23Z"/><path class="f" d="M34 23Q50 21 61 35Q46 27 34 23Z"/><circle fill="#6b3f22" cx="31" cy="27" r="3.2"/><circle fill="#6b3f22" cx="37" cy="27" r="3.2"/></symbol>
+<symbol id="i-toucan" viewBox="0 0 64 64"><path class="f" d="M18 57Q9 34 22 20Q30 10 42 14Q50 18 46 32Q44 46 34 57Z"/><path class="w" d="M26 28Q37 30 39 41Q35 52 29 54Q22 40 26 28Z"/><path class="a" d="M38 16Q58 8 62 24Q50 30 38 26Z"/><path class="k" d="M50 18Q60 18 62 24Q56 26 50 24Z"/><circle class="w" cx="36" cy="19" r="3.6"/><circle class="k" cx="36.8" cy="19" r="1.6"/><path class="as" stroke-width="3" d="M26 57v4M35 57v4"/></symbol>
+<symbol id="i-cristo" viewBox="0 0 64 64"><circle class="f" cx="32" cy="9" r="5.5"/><rect class="f" x="3" y="17" width="58" height="7" rx="3.5"/><path class="f" d="M26 17h12l3 34H23z"/><path class="a" d="M15 51h34l5 10H10z"/></symbol>
+<symbol id="i-cocktail" viewBox="0 0 64 64"><path class="f" d="M12 18h40l-5 38a3 3 0 0 1-3 2H20a3 3 0 0 1-3-2z"/><rect class="w" x="22" y="30" width="9" height="9" rx="2" opacity=".55" transform="rotate(12 26 34)"/><path class="as" stroke-width="4" d="M33 34L41 4"/><circle class="g" cx="50" cy="17" r="10"/><path class="s" style="stroke:#fff" stroke-width="2" d="M50 9v16M42 17h16M44.3 11.3l11.4 11.4M44.3 22.7l11.4-11.4"/></symbol>
+<symbol id="i-speaker" viewBox="0 0 64 64"><rect class="f" x="12" y="4" width="40" height="56" rx="8"/><circle class="a" cx="32" cy="39" r="13"/><circle class="f" cx="32" cy="39" r="5"/><circle class="a" cx="32" cy="17" r="5"/></symbol>
+<symbol id="i-heart" viewBox="0 0 64 64"><path class="f" d="M32 57C8 39 6 21 18 14C26 10 31 16 32 21C33 16 38 10 46 14C58 21 56 39 32 57Z"/><path class="s" style="stroke:#fff;opacity:.6" stroke-width="3" d="M15 25Q16 19 22 17"/></symbol>
+<symbol id="i-ball" viewBox="0 0 64 64"><circle class="w" cx="32" cy="32" r="25" style="stroke:currentColor;stroke-width:3.5"/><path class="f" d="M32 20l11 8-4 13H25l-4-13z"/><path class="s" stroke-width="3" d="M32 20V9M43 28l12-4M39 41l7 10M25 41l-7 10M21 28L9 24"/></symbol>
+<symbol id="i-shades" viewBox="0 0 64 64"><path class="f" d="M4 22h25v12q0 12-12.5 12T4 34z"/><path class="f" d="M35 22h25v12q0 12-12.5 12T35 34z"/><path class="s" stroke-width="4" d="M29 27Q32 22 35 27"/><path class="as" stroke-width="3" d="M10 29l6-3M41 29l6-3"/></symbol>
+<symbol id="i-pepper" viewBox="0 0 64 64"><path class="f" d="M38 14Q54 12 55 28Q55 46 22 59Q15 52 25 44Q39 33 36 20Z"/><path class="as" stroke-width="5" d="M40 14Q41 6 49 4"/></symbol>
+<symbol id="i-berimbau" viewBox="0 0 64 64"><path class="s" stroke-width="4" d="M16 5Q1 32 24 59"/><path class="as" stroke-width="2.4" d="M16 5L24 59"/><circle class="a" cx="29" cy="45" r="12"/><circle class="k" cx="29" cy="45" r="4.5"/><path class="s" stroke-width="4" d="M44 14l14 14"/></symbol>
+<symbol id="i-wave" viewBox="0 0 64 64"><g class="s" stroke-width="5.5"><path d="M4 20q7-9 14 0t14 0 14 0 14 0"/><path d="M4 34q7-9 14 0t14 0 14 0 14 0"/><path d="M4 48q7-9 14 0t14 0 14 0 14 0"/></g></symbol>
+<symbol id="i-mask" viewBox="0 0 64 64"><path class="f" d="M4 28Q32 14 60 28Q58 48 44 50Q36 50 32 42Q28 50 20 50Q6 48 4 28Z"/><ellipse class="k" cx="19" cy="35" rx="8" ry="4.6" transform="rotate(-14 19 35)"/><ellipse class="k" cx="45" cy="35" rx="8" ry="4.6" transform="rotate(14 45 35)"/><circle class="a" cx="32" cy="26" r="3.2"/><path class="as" stroke-width="3" d="M49 22Q55 9 62 6M54 25Q62 17 63 13"/></symbol>
+<symbol id="i-pandeiro" viewBox="0 0 64 64"><circle class="f" cx="32" cy="32" r="27"/><circle class="a" cx="32" cy="32" r="18"/><g class="w"><circle cx="32" cy="9.5" r="3"/><circle cx="54.5" cy="32" r="3"/><circle cx="32" cy="54.5" r="3"/><circle cx="9.5" cy="32" r="3"/><circle cx="48" cy="16" r="3"/><circle cx="48" cy="48" r="3"/><circle cx="16" cy="48" r="3"/><circle cx="16" cy="16" r="3"/></g></symbol>
+<symbol id="i-flag" viewBox="0 0 64 64"><rect x="3" y="12" width="58" height="40" rx="5" fill="#009C3B" stroke="#0B2E1F" stroke-width="3"/><path d="M32 17L55 32 32 47 9 32z" fill="#FFDF00"/><circle cx="32" cy="32" r="9" fill="#002776"/><path d="M24 31q8-3 16 2" stroke="#fff" stroke-width="2.2" fill="none"/></symbol>
+<symbol id="i-car" viewBox="0 0 64 64"><path class="f" d="M3 46V37Q3 32 9 31L16 30L23 19Q25 16 29 16H43Q47 16 49 19L55 30L58 31Q61 32 61 37V46Z"/><path class="a" d="M24 29L29 20H42L47 29Z"/><circle class="k" cx="16" cy="47" r="8"/><circle class="w" cx="16" cy="47" r="3"/><circle class="k" cx="48" cy="47" r="8"/><circle class="w" cx="48" cy="47" r="3"/></symbol>
+<symbol id="i-beach" viewBox="0 0 64 64"><path class="as" stroke-width="3.5" d="M32 30V58"/><path class="f" d="M4 32Q8 6 32 6T60 32Z"/><path class="a" d="M32 6Q24 8 22 32H42Q40 8 32 6Z"/><path class="t" stroke-width="4" d="M10 60h44"/></symbol>
+<symbol id="i-note" viewBox="0 0 64 64"><path class="s" stroke-width="5" d="M24 46V13L52 7v33"/><circle class="f" cx="17" cy="47" r="8"/><circle class="f" cx="45" cy="41" r="8"/></symbol>
+<symbol id="i-hibiscus" viewBox="0 0 64 64"><ellipse class="f" cx="32" cy="17" rx="9.5" ry="14"/><ellipse class="f" cx="32" cy="17" rx="9.5" ry="14" transform="rotate(72 32 32)"/><ellipse class="f" cx="32" cy="17" rx="9.5" ry="14" transform="rotate(144 32 32)"/><ellipse class="f" cx="32" cy="17" rx="9.5" ry="14" transform="rotate(216 32 32)"/><ellipse class="f" cx="32" cy="17" rx="9.5" ry="14" transform="rotate(288 32 32)"/><circle class="a" cx="32" cy="32" r="7"/><path class="as" stroke-width="3" d="M32 32L45 19"/><circle class="a" cx="46" cy="18" r="3.2"/></symbol>
+<symbol id="i-phone" viewBox="0 0 64 64"><rect class="f" x="16" y="3" width="32" height="58" rx="7"/><rect class="a" x="21" y="11" width="22" height="34" rx="2"/><circle class="a" cx="32" cy="53" r="3"/></symbol>
+<symbol id="i-shield" viewBox="0 0 64 64"><path class="f" d="M32 3L56 12V30Q56 49 32 61Q8 49 8 30V12Z"/><path class="a" d="M32 18l4.5 9.5 10 1.2-7.4 6.9 2 10.2L32 41l-9.1 4.8 2-10.2-7.4-6.9 10-1.2z"/></symbol>
+<symbol id="i-star" viewBox="0 0 64 64"><path class="f" d="M32 4l8.4 17.6 19.2 2.4-14 13.3 3.6 19L32 47.5 14.8 56.3l3.6-19-14-13.3 19.2-2.4z"/></symbol>
+<symbol id="i-house" viewBox="0 0 64 64"><path class="f" d="M5 30L32 8l27 22v27H5z"/><path class="a" d="M26 57V38h12v19z"/><rect class="a" x="11" y="34" width="9" height="9" rx="1"/><rect class="a" x="44" y="34" width="9" height="9" rx="1"/></symbol>
+<symbol id="i-plane" viewBox="0 0 64 64"><path class="f" d="M30 4h4l3 20 22 14v6L37 38v12l8 6v4l-13-3-13 3v-4l8-6V38L5 44v-6l22-14z"/></symbol>
+<symbol id="i-check" viewBox="0 0 64 64"><circle class="f" cx="32" cy="32" r="26"/><path class="s" style="stroke:#fff" stroke-width="7" d="M19 33l9 9 18-20"/></symbol>
+</svg>
+
+<div class="bg" id="bg"></div>
+
+<nav class="levels" id="levels" aria-label="Niveaux de la présentation"></nav>
+
+<div id="app">
+<header class="hero" id="accueil">
+  <div class="wrap"><div class="hero-card">
+    <p class="kicker">Background · GTA RP</p>
+    <h1>Samba Luma Per</h1>
+    <p class="tagline">Le sourire de Belo Horizonte</p>
+    <div class="rule" aria-hidden="true"></div>
+    <ul class="facts">
+      <li><i data-ic="flag"></i>Brésilien</li>
+      <li>23 ans</li>
+      <li>Belo Horizonte, Minas Gerais</li>
+      <li>Né un 18 août</li>
+    </ul>
+  </div></div>
+</header>
+
+<main>
+<!-- NIVEAU 1 -->
+<section class="level" id="cartes" data-label="Cartes" style="--sh:var(--green)">
+ <div class="wrap"><div class="panel">
+  <header class="plaque"><span class="lvl">Niveau 1</span><h2>Qualités et défauts</h2><p class="lead">Une carte par trait de caractère. Clique sur une carte pour la retourner.</p></header>
+  <h3><i data-ic="sun"></i>Qualités</h3>
+  <div class="deck" id="deckQ"></div>
+  <h3><i data-ic="pepper"></i>Défauts</h3>
+  <div class="deck" id="deckD"></div>
+  <button class="btn" id="flipAll" type="button"><i data-ic="star" style="width:.9rem;height:.9rem;color:var(--gold)"></i><span>Tout retourner</span></button>
+ </div></div>
+</section>
+
+<!-- NIVEAU 2 -->
+<section class="level" id="fiche" data-label="Fiche" style="--sh:var(--sun-warm)">
+ <div class="wrap"><div class="panel">
+  <header class="plaque"><span class="lvl">Niveau 2</span><h2>Fiche d'identité</h2></header>
+  <div class="fiche">
+    <div class="id-card">
+      <div class="avatar" id="avatar"></div>
+      <p class="id-name">Samba Luma Per</p>
+      <p class="id-sub">« Le sourire de Belo Horizonte »</p>
+    </div>
+    <dl class="cv">
+      <div><dt>Nom</dt><dd>Samba Luma Per</dd></div>
+      <div><dt>Âge</dt><dd>23 ans</dd></div>
+      <div><dt>Naissance</dt><dd>18 août</dd></div>
+      <div><dt>Lieu de naissance</dt><dd>Belo Horizonte, Minas Gerais, Brésil</dd></div>
+      <div><dt>Nationalité</dt><dd>Brésilienne</dd></div>
+      <div><dt>Origines</dt><dd>Brésiliennes</dd></div>
+      <div><dt>Caractère</dt><dd class="chips">
+        <span class="chip"><i data-ic="note"></i>Fêtard</span><span class="chip"><i data-ic="smile"></i>Drôle</span><span class="chip"><i data-ic="berimbau"></i>Provocateur</span><span class="chip"><i data-ic="hibiscus"></i>Charmeur</span><span class="chip"><i data-ic="ball"></i>Impulsif</span><span class="chip"><i data-ic="heart"></i>Attachant</span><span class="chip"><i data-ic="wave"></i>Parfois imprévisible</span>
+      </dd></div>
+      <div><dt>Passions</dt><dd class="chips">
+        <span class="chip t2"><i data-ic="note"></i>La musique</span><span class="chip t2"><i data-ic="speaker"></i>La funk brésilienne</span><span class="chip t2"><i data-ic="pandeiro"></i>La danse</span><span class="chip t2"><i data-ic="beach"></i>Les plages</span><span class="chip t2"><i data-ic="hibiscus"></i>Les femmes</span><span class="chip t2"><i data-ic="car"></i>Les voitures</span><span class="chip t2"><i data-ic="cocktail"></i>Les soirées entre cousins</span>
+      </dd></div>
+    </dl>
+  </div>
+ </div></div>
+</section>
+
+<!-- NIVEAU 3 -->
+<section class="level" id="parcours" data-label="Parcours" style="--sh:var(--green)">
+ <div class="wrap"><div class="panel">
+  <header class="plaque"><span class="lvl">Niveau 3</span><h2>Parcours</h2><p class="lead">De l'enfance à Belo Horizonte jusqu'au départ, dans l'ordre.</p></header>
+  <div class="tl">
+    <article class="step">
+      <div class="mark"><div class="disc"><i data-ic="sun"></i></div><span class="when">Enfance</span></div>
+      <div class="entry">
+        <h3>Un enfant du soleil</h3>
+        <p>Samba naît un 18 août au cœur de Belo Horizonte, dans une famille aussi bruyante qu'attachante. Il grandit entouré de musique, de rires, de disputes et d'une quantité presque interminable de cousins.</p>
+        <p>Chez les Luma Per, la famille, c'est sacré. Petit, il est déjà une tornade : genoux écorchés, vêtements sales, une nouvelle histoire à raconter. Il adore faire rire et provoquer ses cousins. Derrière son sourire permanent se cache un garçon qui ressent les choses bien plus profondément qu'il ne veut le montrer.</p>
+      </div>
+    </article>
+    <article class="step">
+      <div class="mark"><div class="disc"><i data-ic="speaker"></i></div><span class="when">Musique</span></div>
+      <div class="entry">
+        <h3>La musique dans le sang</h3>
+        <p>Son enfance est bercée par les percussions, le samba traditionnel et surtout la funk brésilienne qui résonne dans les rues de son quartier. Avec ses cousins, il improvise des chorégraphies devant la maison, le son beaucoup trop fort, jusqu'à ce que les voisins viennent se plaindre.</p>
+        <p>Pour lui, la musique est une manière de vivre : triste, heureux ou amoureux, il met de la musique. Son rêve est d'organiser un jour ses propres soirées, de réunir tous ses cousins et de faire danser toute une ville.</p>
+        <p class="callout">Règle numéro un : impossible de rester assis quand une bonne funk brésilienne passe !</p>
+      </div>
+    </article>
+    <article class="step">
+      <div class="mark"><div class="disc"><i data-ic="heart"></i></div><span class="when">19 ans</span></div>
+      <div class="entry">
+        <h3>L'amour qui laisse des cicatrices</h3>
+        <p>À 19 ans, Samba tombe amoureux d'Isabella, rencontrée lors d'une soirée entre amis. Au début, leur histoire ressemble à un film : promenades au soleil, soirées sur la plage, messages jusqu'à trois heures du matin, danses improvisées et promesses d'avenir. Lui qui prétendait ne jamais s'attacher se laisse prendre au jeu, lui montre sa fragilité et lui présente une grande partie de sa famille.</p>
+        <p>Un soir, il découvre qu'Isabella voit un autre homme depuis plusieurs semaines. Le pire, c'est que certaines personnes de son entourage le savaient et ont préféré se taire. Poignardé dans le dos par des gens de confiance, il ne fait pas de scène, ne pleure pas devant elle et part simplement.</p>
+        <p>Depuis, il sourit, rit et plaisante toujours, mais il a beaucoup plus de mal à faire confiance. Il croit encore à l'amour, même s'il prétend régulièrement le contraire.</p>
+      </div>
+    </article>
+    <article class="step">
+      <div class="mark"><div class="disc"><i data-ic="house"></i></div><span class="when">Famille</span></div>
+      <div class="entry">
+        <h3>Une famille, mille histoires</h3>
+        <p>Samba a tant de cousins qu'il ne sait plus toujours qui est cousin avec qui. Il y a les sérieux, ceux qui travaillent ou étudient, ceux qui sont toujours dans les problèmes et ceux qui ont toujours une idée stupide à proposer. Samba fait partie de cette dernière catégorie. Avec eux, il a déjà :</p>
+        <ul class="checks">
+          <li><i data-ic="check"></i>Fait des courses improvisées dans les rues de Belo Horizonte</li>
+          <li><i data-ic="check"></i>Organisé des fêtes sans prévenir les parents</li>
+          <li><i data-ic="check"></i>Séché certaines obligations pour aller à la plage</li>
+          <li><i data-ic="check"></i>Dépensé son dernier billet dans une soirée</li>
+          <li><i data-ic="check"></i>Inventé des excuses absolument catastrophiques</li>
+          <li><i data-ic="check"></i>Terminé des soirées à rire jusqu'au lever du soleil</li>
+        </ul>
+        <p>Derrière ces conneries, il y a une vraie loyauté. On peut se moquer de lui ou le provoquer, mais toucher à l'un de ses proches est une autre histoire. Il n'est ni le plus intelligent ni le plus raisonnable, mais il est toujours présent quand un cousin a besoin de lui.</p>
+      </div>
+    </article>
+    <article class="step">
+      <div class="mark"><div class="disc"><i data-ic="beach"></i></div><span class="when">23 ans</span></div>
+      <div class="entry">
+        <h3>Le garçon qui refuse de grandir</h3>
+        <p>À 23 ans, Samba reste un grand enfant. Il adore le soleil, la plage, les belles voitures, les femmes, les soirées et les journées qui ne finissent jamais. Il peut regarder le coucher du soleil pendant des heures, une enceinte posée à côté de lui et une boisson fraîche à la main, le sable sous les pieds et le bruit des vagues dans les oreilles.</p>
+        <p>Il rêve d'une vie où il n'aurait plus à compter chaque billet, où sa famille ne manquerait de rien et où il pourrait profiter de chaque instant sans se demander ce que demain lui réserve.</p>
+        <p>Il est aussi impulsif, parfois jaloux, souvent provocateur et incapable de résister à une mauvaise idée d'un cousin. Il parle beaucoup, réfléchit parfois trop tard et préfère rire de ses problèmes plutôt que d'en parler. La vie est trop courte pour rester triste.</p>
+      </div>
+    </article>
+    <article class="step">
+      <div class="mark"><div class="disc"><i data-ic="plane"></i></div><span class="when">Aujourd'hui</span></div>
+      <div class="entry">
+        <h3>Un nouveau départ</h3>
+        <p>Samba tourne une page. Il quitte Belo Horizonte avec beaucoup de souvenirs, quelques blessures au cœur et des rêves plein les poches. Il ne sait pas exactement ce qu'il cherche : peut-être une nouvelle vie, de nouvelles rencontres, une nouvelle histoire d'amour, ou simplement l'occasion de prouver qu'il peut devenir quelqu'un.</p>
+        <p>Il emporte les valeurs de sa famille, sa passion pour la musique et son énergie brésilienne. Il ne veut ni devenir froid ni oublier d'où il vient. Il veut réussir, profiter, faire rire, rencontrer des personnes qui compteront vraiment et, pourquoi pas, retrouver le sentiment d'amour qu'il avait perdu.</p>
+        <p class="callout">Il ne compte pas devenir sage du jour au lendemain : il est venu pour vivre, danser, rire, faire des rencontres et probablement faire quelques conneries en chemin.</p>
+      </div>
+    </article>
+  </div>
+ </div></div>
+</section>
+
+<!-- NIVEAU 4 -->
+<section class="level" id="habitudes" data-label="Habitudes" style="--sh:var(--sun-warm)">
+ <div class="wrap"><div class="panel">
+  <header class="plaque"><span class="lvl">Niveau 4</span><h2>Ses petites habitudes RP</h2></header>
+  <ul class="tiles">
+    <li class="tile"><i data-ic="toucan"></i><span>Dire « Meu irmão ! » à presque tout le monde.</span></li>
+    <li class="tile"><i data-ic="car"></i><span>Mettre de la funk brésilienne dès qu'il monte dans une voiture.</span></li>
+    <li class="tile"><i data-ic="pandeiro"></i><span>Danser spontanément dans la rue.</span></li>
+    <li class="tile"><i data-ic="smile"></i><span>Faire des blagues même dans les situations sérieuses.</span></li>
+    <li class="tile"><i data-ic="phone"></i><span>Appeler ses cousins pour les moindres problèmes.</span></li>
+    <li class="tile"><i data-ic="hibiscus"></i><span>Flirter maladroitement avec les femmes qui lui plaisent.</span></li>
+    <li class="tile"><i data-ic="mask"></i><span>Toujours chercher un moyen de faire rire son entourage.</span></li>
+    <li class="tile"><i data-ic="shield"></i><span>Détester qu'on manque de respect à sa famille.</span></li>
+    <li class="tile"><i data-ic="heart"></i><span>Faire le dur alors qu'il est beaucoup plus sensible qu'il ne le montre.</span></li>
+  </ul>
+ </div></div>
+</section>
+
+<!-- NIVEAU 5 -->
+<section class="level" id="phrases" data-label="Phrases" style="--sh:var(--green)">
+ <div class="wrap"><div class="panel">
+  <header class="plaque"><span class="lvl">Niveau 5</span><h2>Phrases emblématiques</h2></header>
+  <ul class="quotes">
+    <li class="quote"><p class="pt">« Meu irmão, relaxa ! A vida é uma só ! »</p><p class="fr">Mon frère, détends-toi ! On n'a qu'une vie !</p></li>
+    <li class="quote"><p class="pt">« Se não tem música, não tem festa ! »</p><p class="fr">S'il n'y a pas de musique, il n'y a pas de fête !</p></li>
+    <li class="quote"><p class="pt">« Família primeiro, sempre ! »</p><p class="fr">La famille d'abord, toujours !</p></li>
+    <li class="quote"><p class="pt">« Hoje a gente vive, amanhã a gente vê ! »</p><p class="fr">Aujourd'hui on vit, demain on verra !</p></li>
+    <li class="quote"><p class="pt">« Eu não sou louco, só tenho criatividade demais ! »</p><p class="fr">Je ne suis pas fou, j'ai juste trop d'imagination !</p></li>
+  </ul>
+  <figure class="final" style="margin-inline:0;margin-bottom:0">
+    <blockquote>« J'ai grandi avec le bruit des enceintes, les cris de mes cousins et le soleil sur le visage. J'ai connu l'amour, la trahison et les nuits où même la musique n'arrivait plus à couvrir mes pensées. Mais je suis Brésilien, irmão. Je peux tomber mille fois, tant qu'il reste une musique pour danser, je me relèverai toujours. »</blockquote>
+    <cite>Samba Luma Per</cite>
+  </figure>
+ </div></div>
+</section>
+</main>
+
+<footer><p class="legal">Samba Luma Per · Belo Horizonte, Minas Gerais</p></footer>
+</div>
+
+<!-- lecteur -->
+<audio id="aud" src="musique.mp3" preload="auto" loop></audio>
+<div class="player" id="player" role="region" aria-label="Lecteur de musique">
+  <div class="vinyl" aria-hidden="true"></div>
+  <div class="meta"><strong>La Mamá de la Mamá</strong><span>El Alfa · CJ · El Cherry</span></div>
+  <button class="pbtn" id="pp" type="button" aria-label="Lecture">
+    <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+    <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></svg>
+  </button>
+  <div class="seekbox"><span id="tcur">0:00</span><input id="seek" type="range" min="0" max="1000" value="0" aria-label="Position dans la musique"><span id="tdur">3:40</span></div>
+  <div class="volbox">
+    <button class="mbtn" id="mute" type="button" aria-label="Couper le son">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9z"/><path class="w2" d="M15.5 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.4 5.6a9 9 0 0 1 0 12.8l-1.4-1.4a7 7 0 0 0 0-10z"/><path class="x" d="M15 9.4l1.4-1.4 2.1 2.1 2.1-2.1L22 9.4l-2.1 2.1 2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1z"/></svg>
+    </button>
+    <input id="vol" type="range" min="0" max="100" value="55" aria-label="Volume">
+  </div>
+  <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+</div>
+
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ico=(n,c='')=>`<svg class="ic ${c}" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+/* ---------- palmiers (silhouettes détaillées) ---------- */
+function frond(cx,cy,ang,len,droop,col){
+  const ex=cx+Math.cos(ang)*len,ey=cy+Math.sin(ang)*len+droop;
+  const mx=cx+Math.cos(ang)*len*.5,my=cy+Math.sin(ang)*len*.5-len*.2;
+  let leaf='';const N=34;
+  for(let i=2;i<=N;i++){
+    const t=i/N,u=1-t;
+    const px=u*u*cx+2*u*t*mx+t*t*ex,py=u*u*cy+2*u*t*my+t*t*ey;
+    const tx=2*u*(mx-cx)+2*t*(ex-mx),ty=2*u*(my-cy)+2*t*(ey-my),tl=Math.hypot(tx,ty)||1;
+    const nx=-ty/tl,ny=tx/tl;
+    const L=len*.26*Math.pow(Math.sin(Math.PI*Math.min(1,t*1.04)),.55)*(1-t*.3);
+    for(const sd of[1,-1]){
+      const dx=tx/tl*.5+nx*sd*.86,dy=ty/tl*.5+ny*sd*.86;
+      leaf+=`M${px.toFixed(1)} ${py.toFixed(1)}Q${(px+dx*L*.6).toFixed(1)} ${(py+dy*L*.6+L*.12).toFixed(1)} ${(px+dx*L).toFixed(1)} ${(py+dy*L+L*.6).toFixed(1)}`;
+    }
+  }
+  return `<path d="M${cx} ${cy}Q${mx.toFixed(1)} ${my.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}" stroke="${col}" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="${leaf}" stroke="${col}" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+}
+function palmSvg(seed){
+  const r=rng(seed),col='#0a2418';
+  let s='';
+  const crown=[250,250];
+  s+=`<path d="M70 900Q40 560 ${crown[0]} ${crown[1]}" stroke="url(#trk)" stroke-width="26" fill="none" stroke-linecap="round"/>`;
+  s+=`<path d="M70 900Q40 560 ${crown[0]} ${crown[1]}" stroke="rgba(255,255,255,.09)" stroke-width="26" fill="none" stroke-dasharray="3 12"/>`;
+  const A=[-175,-150,-128,-105,-82,-58,-36,-14,6,24,-195,-210];
+  A.forEach((deg,i)=>{
+    const a=deg*Math.PI/180,len=190+r()*110,dr=(deg>-100&&deg<-60)?10:60+r()*80;
+    s+=frond(crown[0],crown[1],a,len,dr,col);
+  });
+  s+=`<circle cx="${crown[0]-6}" cy="${crown[1]+10}" r="9" fill="#2a1a0c"/><circle cx="${crown[0]+9}" cy="${crown[1]+14}" r="8" fill="#2a1a0c"/>`;
+  return `<svg viewBox="0 0 520 900" preserveAspectRatio="xMinYMax meet" aria-hidden="true"><defs><linearGradient id="trk" x1="0" x2="1"><stop offset="0" stop-color="#1a1308"/><stop offset="1" stop-color="#3b2a14"/></linearGradient></defs>${s}</svg>`;
+}
+
+/* ---------- plage : canvas ---------- */
+(()=>{
+  const host=$('#bg'),cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+  host.appendChild(cv);
+  host.insertAdjacentHTML('beforeend',`<div class="palm l">${palmSvg(5)}</div><div class="palm r">${palmSvg(9)}</div>`);
+  let W,H,D,hz,sh,sx,sy,off,glit=[],last=0,raf;
+  const grad=(c,y0,y1,stops)=>{const g=c.createLinearGradient(0,y0,0,y1);stops.forEach(([o,col])=>g.addColorStop(o,col));return g};
+  function glow(c,x,y,r,stops){const g=c.createRadialGradient(x,y,0,x,y,r);stops.forEach(([o,col])=>g.addColorStop(o,col));c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2)}
+  function build(){
+    off=document.createElement('canvas');off.width=W*D;off.height=H*D;
+    const c=off.getContext('2d');c.scale(D,D);
+    const rnd=rng(7);
+    c.fillStyle=grad(c,0,hz,[[0,'#4fa9e0'],[.45,'#9fd3ee'],[.8,'#f7dfb4'],[1,'#ffcf8a']]);c.fillRect(0,0,W,hz+2);
+    glow(c,sx,sy,Math.max(W,H)*.75,[[0,'rgba(255,236,170,.9)'],[.12,'rgba(255,214,120,.55)'],[.4,'rgba(255,190,110,.18)'],[1,'rgba(255,190,110,0)']]);
+    // nuages doux
+    c.save();c.globalAlpha=.55;
+    for(let i=0;i<9;i++){
+      const cx=rnd()*W,cy=hz*(.12+rnd()*.5),w=120+rnd()*260;
+      for(let k=0;k<7;k++){const rr=w*(.18+rnd()*.22),ox=(rnd()-.5)*w,oy=(rnd()-.5)*w*.12;glow(c,cx+ox,cy+oy,rr,[[0,'rgba(255,248,235,.55)'],[1,'rgba(255,248,235,0)']])}
+    }
+    c.restore();
+    // soleil
+    glow(c,sx,sy,H*.09,[[0,'rgba(255,252,230,1)'],[.5,'rgba(255,240,180,.95)'],[1,'rgba(255,225,140,0)']]);
+    // collines au loin
+    const hill=(x0,x1,peak,col,seed)=>{const r=rng(seed);c.beginPath();c.moveTo(x0,hz);for(let x=x0;x<=x1;x+=8){const u=(x-x0)/(x1-x0);c.lineTo(x,hz-peak*Math.pow(Math.sin(Math.PI*u),.8)*(1+.06*Math.sin(x*.05+seed)))}c.lineTo(x1,hz);c.closePath();c.fillStyle=col;c.fill()};
+    hill(W*.02,W*.34,H*.09,'rgba(88,142,150,.55)',3);
+    hill(W*.2,W*.42,H*.13,'rgba(52,104,104,.7)',5);
+    hill(W*.78,W*1.05,H*.07,'rgba(88,142,150,.5)',8);
+    // mer
+    c.fillStyle=grad(c,hz,sh,[[0,'#f3cf98'],[.08,'#8fd0d6'],[.35,'#2aa6b4'],[1,'#0b7f93']]);c.fillRect(0,hz,W,sh-hz);
+    // reflet du soleil
+    c.save();c.globalCompositeOperation='lighter';
+    const g=c.createLinearGradient(0,hz,0,sh);g.addColorStop(0,'rgba(255,225,150,.55)');g.addColorStop(1,'rgba(255,215,130,.08)');
+    c.fillStyle=g;c.beginPath();c.moveTo(sx-W*.015,hz);c.lineTo(sx+W*.015,hz);c.lineTo(sx+W*.12,sh);c.lineTo(sx-W*.12,sh);c.closePath();c.fill();c.restore();
+    // sable
+    c.fillStyle=grad(c,sh-4,H,[[0,'#f2d7a6'],[.5,'#e6c088'],[1,'#d6a869']]);c.fillRect(0,sh-4,W,H-sh+4);
+    for(let i=0;i<2600;i++){c.fillStyle=`rgba(${rnd()<.5?'120,80,40':'255,245,220'},${.05+rnd()*.08})`;c.fillRect(rnd()*W,sh+rnd()*(H-sh),1.4,1.4)}
+  }
+  function layout(){
+    D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
+    cv.width=W*D;cv.height=H*D;hz=H*.5;sh=H*.78;sx=W*(W>H?.68:.6);sy=hz-H*.04;
+    const r=rng(11);glit=[];
+    for(let i=0;i<340;i++){const d=Math.pow(r(),1.5);const y=hz+d*(sh-hz);const spread=W*(.02+.12*d);let g=0;for(let k=0;k<4;k++)g+=r()-.5;glit.push({x:sx+g*spread*1.4,y,d,ph:r()*Math.PI*2,sp:.8+r()*1.6})}
+    build();draw(0);
+  }
+  function draw(t){
+    const c=ctx;c.setTransform(D,0,0,D,0,0);c.clearRect(0,0,W,H);c.drawImage(off,0,0,W,H);
+    // vagues
+    for(let i=0;i<16;i++){
+      const u=(i+1)/16,y=hz+(sh-hz)*Math.pow(u,1.7),amp=.6+u*3.4,fr=.012-u*.006;
+      c.beginPath();
+      for(let x=0;x<=W+10;x+=14){const yy=y+Math.sin(x*fr+t*.0007*(1+u)+i*1.3)*amp;x?c.lineTo(x,yy):c.moveTo(x,yy)}
+      c.strokeStyle=`rgba(255,255,255,${.05+u*.22})`;c.lineWidth=.6+u*1.8;c.stroke();
+    }
+    // scintillement
+    c.save();c.globalCompositeOperation='lighter';
+    for(const q of glit){
+      const tw=(Math.sin(t*.001*q.sp+q.ph)+1)/2;
+      c.fillStyle=`rgba(255,238,185,${(.08+.7*tw*tw)*(.5+q.d*.5)})`;
+      const w=3+q.d*16,h=1+q.d*1.6;c.fillRect(q.x-w/2,q.y,w,h);
+    }
+    c.restore();
+    // écume
+    const wash=Math.sin(t*.0006)*7;
+    c.beginPath();c.moveTo(0,sh+wash);
+    for(let x=0;x<=W+10;x+=12)c.lineTo(x,sh+wash+Math.sin(x*.011+t*.0008)*4);
+    c.lineTo(W,sh-20);c.lineTo(0,sh-20);c.closePath();
+    c.fillStyle='rgba(255,255,255,.42)';c.fill();
+    c.beginPath();c.moveTo(0,sh+wash+4);
+    for(let x=0;x<=W+10;x+=12)c.lineTo(x,sh+wash+4+Math.sin(x*.011+t*.0008)*4);
+    c.lineTo(W,sh+wash+26);c.lineTo(0,sh+wash+26);c.closePath();
+    c.fillStyle=grad(c,sh+wash,sh+wash+26,[[0,'rgba(120,90,50,.16)'],[1,'rgba(120,90,50,0)']]);c.fill();
+  }
+  function loop(ts){raf=requestAnimationFrame(loop);if(document.hidden||ts-last<33)return;last=ts;draw(ts)}
+  layout();
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(layout,150)});
+  if(!reduce)raf=requestAnimationFrame(loop);
+})();
+
+/* ---------- emblème ---------- */
+$('#avatar').innerHTML=`<svg viewBox="0 0 240 240" role="img" aria-label="Initiales S L P"><defs><linearGradient id="eg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a9a52"/><stop offset="1" stop-color="#0a4a2a"/></linearGradient><linearGradient id="gd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8e08a"/><stop offset="1" stop-color="#d9a520"/></linearGradient></defs><circle cx="120" cy="120" r="116" fill="url(#eg)"/><circle cx="120" cy="120" r="108" fill="none" stroke="url(#gd)" stroke-width="1.5"/><path d="M120 30L210 120 120 210 30 120z" fill="none" stroke="url(#gd)" stroke-width="1.5"/><circle cx="120" cy="120" r="52" fill="#0a3a73" opacity=".9"/><circle cx="120" cy="120" r="52" fill="none" stroke="url(#gd)" stroke-width="1.2"/><path d="M72 112Q122 96 168 126" stroke="#fffdf7" stroke-width="5" fill="none" opacity=".9"/><text x="120" y="190" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-weight="600" font-size="22" letter-spacing="6" fill="#f6dc7a">SLP</text></svg>`;
+
+$$('[data-ic]').forEach(el=>{el.innerHTML=ico(el.dataset.ic)});
+
+/* ---------- cartes ---------- */
+const Q=[
+ ['Sociable','toucan','Il parle avec tout le monde.'],
+ ['Loyal','cristo','Sa famille passe avant tout.'],
+ ['Drôle','smile','Il adore faire rire son entourage.'],
+ ['Dragueur','hibiscus','Il aime séduire et plaisanter avec les femmes.'],
+ ['Fêtard','speaker','Impossible de le laisser devant une enceinte sans danser.'],
+ ['Attachant','heart','Un grand enfant au grand cœur, plus sensible qu\'il ne le montre.']
+];
+const D=[
+ ['Impulsif','ball','Il agit souvent avant de réfléchir.'],
+ ['Méfiant','shades','Il a du mal à refaire confiance après sa trahison.'],
+ ['Jaloux','pepper','Il peut se montrer jaloux, parfois.'],
+ ['Provocateur','berimbau','Il adore provoquer son entourage, à commencer par ses cousins.'],
+ ['Imprévisible','wave','Un talent exceptionnel pour se retrouver dans des situations improbables.'],
+ ['Esquive','mask','Il préfère rire de ses problèmes plutôt que d\'en parler.']
+];
+const card=(k,[l,i,t])=>`<button class="card ${k}" type="button" aria-pressed="false" aria-label="${l}, carte à retourner"><span class="card-in"><span class="face front"><span class="corner">${k==='q'?'Qualité':'Défaut'}</span>${ico(i,'big')}<b>${l}</b><small>Retourner</small></span><span class="face back"><b>${l}</b><span>${t}</span>${ico('star','mini')}</span></span></button>`;
+$('#deckQ').innerHTML=Q.map(c=>card('q',c)).join('');
+$('#deckD').innerHTML=D.map(c=>card('d',c)).join('');
+$('#cartes').addEventListener('click',e=>{
+  const c=e.target.closest('.card');if(!c)return;
+  c.classList.toggle('flipped');c.setAttribute('aria-pressed',c.classList.contains('flipped'));
+});
+$('#flipAll').addEventListener('click',()=>{
+  const all=$$('.card'),anyDown=all.some(c=>!c.classList.contains('flipped'));
+  all.forEach(c=>{c.classList.toggle('flipped',anyDown);c.setAttribute('aria-pressed',anyDown)});
+  $('#flipAll span').textContent=anyDown?'Tout remettre':'Tout retourner';
+});
+
+/* ---------- icônes à retourner ---------- */
+const COINS=[
+ ['cartes','palm','Praia','la plage','top:-24px;right:18px',0],
+ ['fiche','sun','Verão','l\'été','top:-24px;left:18px',1.2],
+ ['parcours','heart','Saudade','la nostalgie tendre','top:-24px;right:18px',.6],
+ ['parcours','ball','Gol !','but !','top:44%;left:-8px',2,'hide-sm'],
+ ['habitudes','pandeiro','Axé','bonne énergie','top:-24px;left:18px',.9],
+ ['phrases','cocktail','Saúde !','à la tienne !','top:-24px;right:18px',1.7]
+];
+COINS.forEach(([sec,ic,w,fr,pos,d,cl])=>{
+  const b=document.createElement('button');
+  b.type='button';b.className='coin '+(cl||'');b.style.cssText=pos+';--d:'+d+'s';
+  b.setAttribute('aria-label',`Icône du Brésil : ${w}, ${fr}. Retourner.`);
+  b.innerHTML=`<span class="coin-in"><span class="cf front">${ico(ic)}</span><span class="cf back">${w}</span></span><span class="tip">${fr}</span>`;
+  b.addEventListener('click',()=>b.classList.toggle('flipped'));
+  $('#'+sec+' .wrap').appendChild(b);
+});
+
+/* ---------- navigation par niveaux ---------- */
+const LV=[['accueil','Accueil',null],['cartes','Cartes','1'],['fiche','Fiche','2'],['parcours','Parcours','3'],['habitudes','Habitudes','4'],['phrases','Phrases','5']];
+$('#levels').innerHTML=LV.map(([id,l,n])=>`<a href="#${id}" data-id="${id}" aria-label="Aller à : ${l}"><span class="lab">${l}</span><span class="dot">${n||ico('sun')}</span></a>`).join('');
+const links=$$('#levels a');
+function setOn(id){links.forEach(a=>{const on=a.dataset.id===id;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')})}
+setOn('accueil');
+links.forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  const t=document.getElementById(a.dataset.id);
+  if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  setOn(a.dataset.id);
+}));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setOn(e.target.id)}),{rootMargin:'-30% 0px -60% 0px'});
+LV.forEach(([id])=>{const el=document.getElementById(id);if(el)io.observe(el)});
+
+/* ---------- lecteur ---------- */
+const a=$('#aud'),player=$('#player'),pp=$('#pp'),seek=$('#seek'),vol=$('#vol'),mute=$('#mute');
+const fmt=s=>isFinite(s)&&s>0?Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0'):'0:00';
+const fill=el=>el.style.setProperty('--p',((el.value-el.min)/(el.max-el.min)*100)+'%');
+let seeking=false;
+a.volume=.55;fill(seek);fill(vol);
+function sync(){const p=!a.paused;player.classList.toggle('playing',p);pp.setAttribute('aria-label',p?'Pause':'Lecture')}
+pp.addEventListener('click',()=>{player.classList.add('touched');if(a.paused){a.play().catch(()=>{})}else{a.pause()}});
+a.addEventListener('play',sync);a.addEventListener('pause',sync);
+a.addEventListener('loadedmetadata',()=>{$('#tdur').textContent=fmt(a.duration)});
+a.addEventListener('timeupdate',()=>{
+  $('#tcur').textContent=fmt(a.currentTime);
+  if(!seeking&&a.duration){seek.value=a.currentTime/a.duration*1000;fill(seek)}
+});
+seek.addEventListener('input',()=>{seeking=true;fill(seek);if(a.duration){a.currentTime=seek.value/1000*a.duration}});
+seek.addEventListener('change',()=>{seeking=false});
+vol.addEventListener('input',()=>{a.volume=vol.value/100;a.muted=a.volume===0;fill(vol);mute.classList.toggle('off',a.muted)});
+mute.addEventListener('click',()=>{
+  if(a.muted||a.volume===0){a.muted=false;if(a.volume===0){a.volume=.55;vol.value=55;fill(vol)}}else{a.muted=true}
+  mute.classList.toggle('off',a.muted);
+  mute.setAttribute('aria-label',a.muted?'Remettre le son':'Couper le son');
+});
+addEventListener('pointerdown',e=>{
+  if(player.contains(e.target))return;
+  player.classList.add('touched');
+  if(a.paused)a.play().catch(()=>{});
+},{once:true,capture:true});
+a.addEventListener('error',()=>{
+  if(a._fb)return;a._fb=1;
+  fetch('musique.mp3').then(r=>r.blob()).then(b=>{a.src=URL.createObjectURL(b)}).catch(()=>{});
+});
+})();
+</script>
